@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alertmanager
+  namespace: monitoring
+  labels:
+    app: alertmanager
+spec:
+  selector:
+    matchLabels:
+      app: alertmanager
+  replicas: 1
+  template:
+    metadata:
+      name: alertmanager
+      labels:
+        app: alertmanager
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/monitoring: prometheus
+      containers:
+      - name: alertmanager
+        image: registry.cn-guangzhou.aliyuncs.com/orionbonnie/alertmanager:v2
+        ports:
+        - containerPort: 9093
+        resources:
+          requests:
+            cpu: 100m
+            memory: 300M
+          limits:
+            cpu: 150m
+            memory: 300M
+        livenessProbe:
+          tcpSocket:
+            port: 9093
+        readinessProbe:
+          tcpSocket:
+            port: 9093
+        volumeMounts:
+        - mountPath: /opt/conf/
+          name: alertmanager-conf
+        - mountPath: /opt/data/
+          name: alertmanager-data
+      volumes:
+      - name: alertmanager-conf
+        configMap:
+          name: alertmanager-config
+          items:
+          - key: config_data
+            path: alertmanager.yml
+      - name: alertmanager-data
+        hostPath:
+          path: /data/alertmanager-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alertmanager-svc
+  namespace: monitoring
+  labels:
+    app: alertmanager
+spec:
+  selector:
+    app: alertmanager
+  type: ClusterIP
+  ports:
+  - port: 9093
+    targetPort: 9093
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alertmanager-ingress
+  namespace: monitoring
+  labels:
+    app: alertmanager
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: www.promalert.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: alertmanager-svc
+            port:
+              number: 9093
