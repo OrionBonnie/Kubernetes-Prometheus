@@ -36,6 +36,8 @@ kubectl label node 指定节点名称 node-role.kubernetes.io/monitoring=prometh
 
 <div>Node Exporter's ID  <strong><font color="red">1860</font></strong></div>
 
+<div>ETCD's ID  <strong><font color="red">3070/10323</font></strong></div>
+
 ----
 
 ##### AlertManager
@@ -73,3 +75,12 @@ global:
 
 <p>配置段位于名为 <strong>prom-config-rule</strong> 的 ConfigMap 中</p>
 
+---
+
+##### Etcd
+
+<p>etcd监控可选择开启，若需开启，请部署 kubernetes 目录下 <strong>etcd</strong> 目录中的内容 并 去除 preset.yaml中 Prometheus 对 etcd 的服务发现的注释</p>
+
+<p>注意，若使用的是 kubeadm 部署的 K8S 集群，etcd的指标URL默认是暴露的，但其URL仅监听本地，需要手动修改 K8S 集群内 etcd 的 Pod 的指标监听URL</p>
+
+<p>如果 etcd 是集群，部署在多台服务器中，请在 kubernetes 目录下的 etcd 目录修改 <strong>etcd.yaml</strong> 文件，在 subsets 配字段一栏添加所有成员的服务器信息</p>
