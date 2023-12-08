@@ -84,3 +84,11 @@ global:
 <p>注意，若使用的是 kubeadm 部署的 K8S 集群，etcd的指标URL默认是暴露的，但其URL仅监听本地，需要手动修改 K8S 集群内 etcd 的 Pod 的指标监听URL</p>
 
 <p>如果 etcd 是集群，部署在多台服务器中，请在 kubernetes 目录下的 etcd 目录修改 <strong>etcd.yaml</strong> 文件，在 subsets 配字段一栏添加所有成员的服务器信息</p>
+
+---
+
+<p>以下为部署后可使用的Ingress URL地址</p>
+<p>Prometheus TSDB: www.prometheus.com</p>
+<p>Grafana: www.promonitor.com</p>
+<p>AlertManager: www.promalert.com</p>
+<p>需要 DNS 进行域名解析并且使用反代，否则访问时需要在URL后添加Ingress Nodeport暴露的端口才可访问</p>
