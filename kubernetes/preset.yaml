@@ -65,11 +65,6 @@ data:
           insecure_skip_verify: true
         bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
         relabel_configs:
-       # - source_labels: [__address__]
-       #   regex: '(.*):10250'
-       #   replacement: '${1}:8080'
-       #   target_label: __address__
-       #   action: replace
         - action: labelmap
           regex: __meta_kubernetes_node_label_(.+)
         - target_label: __address__
@@ -89,20 +84,20 @@ data:
           regex: '^/system\.slice/(.+)\.service$'
           target_label: systemd_service_name
           replacement: '${1}'
-      - job_name: "etcd"
-        kubernetes_sd_configs:
-          - role: endpoints
-        scheme: http
-        tls_config:
-          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-          insecure_skip_verify: true
-        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-        relabel_configs:
-        - source_labels: [__meta_kubernetes_service_name]
-          regex: kube-etcd
-          action: keep
-        - action: labelmap
-          regex: __meta_kubernetes_pod_label_(.+)
+      #- job_name: "etcd"                 #remove comment if you want etcd to be monitored
+      #  kubernetes_sd_configs:
+      #    - role: endpoints
+      #  scheme: http
+      #  tls_config:
+      #    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      #    insecure_skip_verify: true
+      #  bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      #  relabel_configs:
+      #  - source_labels: [__meta_kubernetes_service_name]
+      #    regex: kube-etcd
+      #    action: keep
+      #  - action: labelmap
+      #    regex: __meta_kubernetes_pod_label_(.+)
 ---
 apiVersion: v1
 kind: ConfigMap
