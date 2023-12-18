@@ -10,10 +10,10 @@
 
 ##### Global
 
-| alertmanager.yaml | cadvisor.yaml |    grafana.yaml    | node-exporter.yaml | preset.yaml | prometheus.yaml |
-| :---------------: | :-----------: | :----------------: | :----------------: | :---------: | :-------------: |
-|     告警部署      | 容器监控部署  | 加尔法那可视化部署 | 节点指标采集器部署 |  预设部署   |    TSDB部署     |
-||||| 首先Kubectl执行该文件 ||
+| alertmanager.yaml | cadvisor.yaml |    grafana.yaml    | node-exporter.yaml | preset.yaml | prometheus.yaml |  etcd.yaml  |
+| :---------------: | :-----------: | :----------------: | :----------------: | :---------: | :-------------: | :---------: |
+|     告警部署      | 容器监控部署  | 加尔法那可视化部署 | 节点指标采集器部署 |  预设部署   |    TSDB部署     |  etcd监控服务对接   |
+||||| 首先Kubectl执行该文件 || 可选项 |
 
 <div>所有的配置都在 preset.yaml 中，执行部署前请修改 preset.yaml 中的配置</div>
 
