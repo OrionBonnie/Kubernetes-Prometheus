@@ -92,3 +92,9 @@ global:
 <p>Grafana: www.promonitor.com</p>
 <p>AlertManager: www.promalert.com</p>
 <p>需要 DNS 进行域名解析并且使用反代，否则访问时需要在URL后添加Ingress Nodeport暴露的端口才可访问</p>
+
+---
+
+##### 已知错误：
+
+- <p>本资源清单列表在以Docker(dockershim)作为CRI时cAdvisor运行正常，但经在以containerd为CRI的v1.28的kubernetes集群中运行时，cAdvisor无法正常监控Pod,但docker容器监控依旧正常</p>
